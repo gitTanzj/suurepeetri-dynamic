@@ -10,6 +10,12 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+import imagesRouter from './routes/images';
+app.get('/images', imagesRouter)
+
+import contentsRouter from './routes/contents';
+app.get('/contents', contentsRouter)
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
