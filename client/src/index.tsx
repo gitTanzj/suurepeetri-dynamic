@@ -23,11 +23,11 @@ const router = createBrowserRouter([
     element: <HousingPage/>,
     children: [
       {
-        path: '/tent',
+        path: '/majutus/tent',
         element: <TentPage/>
       },
       {
-        path: '/haarber',
+        path: '/majutus/haarber',
         element: <MansionPage/>
       }
     ]
