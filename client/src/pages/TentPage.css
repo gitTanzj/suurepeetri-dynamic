@@ -1,0 +1,38 @@
+.tent-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.tent-content{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.tent-text{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+}
+
+.tent-text p{
+    line-height: 1.4em;
+}
+
+.tent-image{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.tent-image img{
+    width: 540px;
+}

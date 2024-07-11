@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './AboutPage.css'
 import { Link, useNavigate } from 'react-router-dom'
 import aboutImage from '../assets/meist.jpg'
+
+import { motion } from 'framer-motion'
+
+import { pageTransitionToRight } from '../animations/pageTransitions'
 
 export const AboutPage = () => {
 
     const navigate = useNavigate()
 
+
     return (
-        <div className='about-container'>
+        <motion.div
+            key='about'
+            className='about-container'
+            variants={pageTransitionToRight}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+        >
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
             <div className='nav-back' onClick={() => navigate(-1)}>
                 <span className="material-symbols-outlined">
@@ -23,9 +35,11 @@ export const AboutPage = () => {
                     </p>
                 </div>
                 <div className='about-image'>
-                    <img src={aboutImage}/>
+                    <img src={aboutImage} alt="Pilt meist"/>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
+
+

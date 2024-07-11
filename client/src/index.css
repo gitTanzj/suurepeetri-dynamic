@@ -10,12 +10,12 @@ body {
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 *{
   box-sizing: border-box;
   margin: 0;
-  transition: 0.1s;
 }
 
 code {
@@ -73,5 +73,23 @@ sub{
   100%{
     transform: translateX(0);
   }
+}
+
+
+
+.nav-up{
+  display: block;
+  position: absolute;
+  rotate: 90deg; 
+  top: 4em;
+}
+
+.nav-up:hover{
+  cursor: pointer;
+  animation: arrowHover 1s infinite;
+}
+
+.nav-up span{
+  font-size: 48px;
 }
 
