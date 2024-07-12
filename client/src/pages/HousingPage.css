@@ -35,3 +35,16 @@
 .housing-option img{
     width: 600px;
 }
+
+@media screen and (max-width: 1024px){
+    .housing-container h2{
+        font-size: 2em;
+        text-align: center;
+    }
+    .housing-options{
+        flex-direction: column;
+    }
+    .housing-option img{
+        width: 50%;
+    }
+}

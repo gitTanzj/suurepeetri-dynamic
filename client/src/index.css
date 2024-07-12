@@ -8,14 +8,8 @@ body {
   background-image: url('./assets/background/backgroundImage1.png');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   background-repeat: no-repeat;
   overflow: hidden;
-}
-
-*{
-  box-sizing: border-box;
-  margin: 0;
 }
 
 code {
@@ -24,17 +18,17 @@ code {
 }
 
 h1{
-  font-size: 96px;
+  font-size: 4em;
   font-weight: 400;
 }
 
 h2{
-  font-size: 72px;
+  font-size: 3em;
   font-weight: 400;
 }
 
 h3{
-  font-size: 48px;
+  font-size: 2em;
   font-weight: 400;
 }
 
@@ -93,3 +87,15 @@ sub{
   font-size: 48px;
 }
 
+@media screen and (max-width: 1024px){
+  
+  .nav-back{
+    top: 2em;
+    left: 1em;
+  }
+
+  .nav-up{
+    top: 2em;
+  }
+  
+}

@@ -8,9 +8,9 @@ a{
 .navbar-container{
     display: flex;
     justify-content: center;
-    position: absolute;
-    bottom: 5em;
-    width: 50%;
+    align-items: end;
+    height: 50vh;
+    padding-bottom: 5em;
 }
 
 .navbar{
@@ -27,6 +27,7 @@ a{
 }
 
 .navbar h3{
+    margin: 0;
     font-weight: 400;
     transition: 0.2s;
 }
@@ -35,9 +36,9 @@ a{
     padding: 0px 10px 0px 10px;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 768px){
     .navbar-container{
-        bottom: 3em;
+        padding-bottom: 2em;
     }
     .navbar{
         flex-direction: column;

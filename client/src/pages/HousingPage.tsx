@@ -1,6 +1,6 @@
 import React from 'react'
 import './HousingPage.css'
-import { useNavigate, Link, Outlet } from 'react-router-dom'
+import { useNavigate, Link, Outlet } from 'react-router-dom';
 
 import tentImage from '../mockData/Telk.png'
 import mansionImage from '../mockData/Uks.png'
@@ -31,14 +31,14 @@ export const HousingPage = () => {
         <Link to='/majutus/telk'>
           <div className="housing-option" id='tent'>
             <img src={tentImage}/>
-            <h3>Telk</h3>
+            <h2>Telk</h2>
           </div>
         </Link>
 
         <Link to='/majutus/haarber'>
           <div className="housing-option" id='mansion'>
             <img src={mansionImage}/>
-            <h3>Häärber</h3>
+            <h2>Häärber</h2>
           </div>
         </Link>
 
