@@ -25,7 +25,6 @@ export const HousingPage = () => {
               chevron_left
           </span>
       </div>
-      <h2>Palun valige sobilik majutusviis</h2>
       <div className="housing-options">
 
         <Link to='/majutus/telk'>

@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
 
-body {
+
+html, body {
   margin: 0;
   font-family: 'Old Standard TT', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('./assets/background/backgroundImage1.png');
-  background-size: cover;
-  background-position: center;
+  background: #eee url('./assets/background/backgroundImage1.png');
   background-repeat: no-repeat;
-  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  overflow-x: hidden;
 }
 
 code {
