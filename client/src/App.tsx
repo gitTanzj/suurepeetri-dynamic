@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 
@@ -16,6 +16,7 @@ import { ContactPage } from './pages/ContactPage';
 export const App = () => {
 
     const location = useLocation()
+
   return (
     <AnimatePresence mode='wait'>
         <Routes location={location} key={location.pathname}>

@@ -3,8 +3,9 @@
 html{
   background: #eee url('./assets/background/backgroundImage1.png');
   background-repeat: no-repeat;
-  background-position: fixed;
+  background-position: center;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 html, body {
@@ -46,9 +47,10 @@ sub{
 }
 
 .nav-back{
-  display: block;
-  position: absolute; 
+  position: fixed;
   left: 4em;
+  top: 50vh;
+  z-index: 1000;
 }
 
 .nav-back:hover{
@@ -75,8 +77,7 @@ sub{
 
 
 .nav-up{
-  display: block;
-  position: absolute;
+  position: fixed;
   rotate: 90deg; 
   top: 4em;
 }
@@ -91,14 +92,7 @@ sub{
 }
 
 @media screen and (max-width: 1024px){
-  
   .nav-back{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid black;
-    border-radius: 50px;
-    background-color: white;
     top: 2em;
     left: 1em;
   }

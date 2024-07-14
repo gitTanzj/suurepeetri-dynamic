@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import './Gallery.css'
 
+
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import { Thumbnails } from "yet-another-react-lightbox/plugins";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
 import image1 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-01.jpg'
 import image2 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-03.jpg'
 import image3 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-04.jpg'
@@ -15,6 +21,9 @@ import image11 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-
 import image12 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-22.jpg'
 
 export const Gallery = () => {
+
+  const [open, setOpen] = useState<boolean>(false)
+
   const images = [
     image1,
     image2,
@@ -31,6 +40,20 @@ export const Gallery = () => {
   ]
 
   return (
-      <div className='images-container'> </div>
+      <>
+        <div className='images-container'>
+          {images.map((image, index) => (
+            <img key={index} src={image} alt={`Pilt ${index}`} onClick={() => setOpen(true)}/>
+          ))}
+        </div>
+        <Lightbox
+          plugins={[Thumbnails]}
+          open={open}
+          close={() => setOpen(false)}
+          slides={images.map((image) => ({
+            src: image
+          }))}
+        />
+      </>
   )
 }
