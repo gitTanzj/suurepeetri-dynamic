@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './GalleryPage.css'
 
@@ -7,6 +7,7 @@ import { Gallery } from '../components/Gallery'
 
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'
+
 
 export const GalleryPage = () => {
 

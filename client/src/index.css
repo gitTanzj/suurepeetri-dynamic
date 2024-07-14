@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
 
+html{
+  background: #eee url('./assets/background/backgroundImage1.png');
+  background-repeat: no-repeat;
+  background-position: fixed;
+  background-size: cover;
+}
 
 html, body {
   margin: 0;
   font-family: 'Old Standard TT', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #eee url('./assets/background/backgroundImage1.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   overflow-x: hidden;
 }
 
@@ -91,6 +93,12 @@ sub{
 @media screen and (max-width: 1024px){
   
   .nav-back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 50px;
+    background-color: white;
     top: 2em;
     left: 1em;
   }

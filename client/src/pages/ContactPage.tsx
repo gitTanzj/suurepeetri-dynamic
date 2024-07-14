@@ -25,11 +25,13 @@ export const ContactPage = () => {
             </span>
         </div>
         <div className='contact-content'>
-          <div className='contact-info'>
-            <h1>Kontakt</h1>
-            <h3>test@gmail.com</h3>
-            <h3>+372 1234 5678</h3>
-            <h3>Aadress 1, Linn, Eesti</h3>
+          <div className='contact-info-container'>
+            <div className='contact-info'>
+              <h1>Kontakt</h1>
+              <h3>test@gmail.com</h3>
+              <h3>+372 1234 5678</h3>
+              <h3>Aadress 1, Linn, Eesti</h3>
+            </div>
           </div>
           <div className='contact-image'>
             <img src={contactImage}/>

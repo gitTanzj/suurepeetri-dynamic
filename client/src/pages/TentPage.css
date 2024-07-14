@@ -111,6 +111,6 @@
         font-size: 4em;
     }
     .tent-text p{
-        margin: 0;
+        margin-bottom: 1em;
     }
 }

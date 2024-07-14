@@ -13,13 +13,21 @@
     width: 100%;
 }
 
+.contact-info-container{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .contact-info{
-    flex: 1;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 1em;
+    background-color: rgba(256, 256, 256, 0.75);
+    border-radius: 15px;
+    padding: 2em;
 }
 
 .contact-info h3{
@@ -27,19 +35,24 @@
 }
 
 .contact-image{
-    flex: 1;
+    width: 30%;
     display: flex;
     justify-content: end;
     align-items: center;
 }
 
 .contact-image img{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
     width: 540px;
     transition: 0.2s;
 }
 @media screen and (max-width: 1024px) {
+    .contact-info-container{
+        width: 90%;
+    }
     .contact-info{
-        width: 80%;
+        width: 100%;
         margin-left: 0;
         text-align: center;
     }
