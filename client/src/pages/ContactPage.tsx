@@ -9,6 +9,7 @@ import { pageTransitionToRight } from '../animations/pageTransitions'
 export const ContactPage = () => {
 
   const navigate = useNavigate()
+  
   return (
     <motion.div
       className="contact-container"
@@ -18,11 +19,11 @@ export const ContactPage = () => {
       exit='exit'
     >
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-          <div className='nav-back' onClick={() => navigate(-1)}>
-              <span className="material-symbols-outlined">
-                  chevron_left
-              </span>
-          </div>
+        <div className='nav-back' onClick={() => navigate(-1)}>
+            <span className="material-symbols-outlined">
+                chevron_left
+            </span>
+        </div>
         <div className='contact-content'>
           <div className='contact-info'>
             <h1>Kontakt</h1>

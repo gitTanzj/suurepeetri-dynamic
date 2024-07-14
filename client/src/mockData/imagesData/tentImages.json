@@ -1,0 +1,38 @@
+[
+    {
+        "src": "client/src/mockData/tentImages/24_06_28_Suurepeetri telkmajutus-01.jpg",
+        "alt": "Tent 1"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-03.jpg",
+        "alt": "Tent 2"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-04.jpg",
+        "alt": "Tent 3"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-05.jpg",
+        "alt": "Tent 4"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-06.jpg",
+        "alt": "Tent 5"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-07.jpg",
+        "alt": "Tent 6"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-08.jpg",
+        "alt": "Tent 7"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-09.jpg",
+        "alt": "Tent 8"
+    },
+    {
+        "src": "../../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-10.jpg",
+        "alt": "Tent 9"
+    }
+]

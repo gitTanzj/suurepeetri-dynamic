@@ -11,6 +11,7 @@ export const AboutPage = () => {
 
     const navigate = useNavigate()
 
+    console.log(aboutImage)
 
     return (
         <motion.div

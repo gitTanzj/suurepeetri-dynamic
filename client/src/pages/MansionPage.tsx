@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { pageTransitionToRight } from '../animations/pageTransitions'
 import { motion } from 'framer-motion'
 
-import tentImage1 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-20.jpg'
-import tentImage2 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-21.jpg'
-import tentImage3 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-22.jpg'
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+import { Thumbnails } from "yet-another-react-lightbox/plugins";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+import mansionImage1 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-20.jpg'
+import mansionImage2 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-21.jpg'
+import mansionImage3 from '../mockData/mansionImages/24_06_28_Suurepeetri telkmajutus-22.jpg'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -12,7 +17,15 @@ import { ContactButton } from '../components/ContactButton'
 
 export const MansionPage = () => {
 
+  const [open, setOpen] = useState<boolean>(false);
+
   const navigate = useNavigate()
+
+  const mansionImages = [
+    mansionImage1,
+    mansionImage2,
+    mansionImage3
+  ]
   return (
     <motion.div
       className='tent-container'
@@ -35,10 +48,28 @@ export const MansionPage = () => {
           </p>
           <ContactButton/>
         </div>
-        <div className='tent-image'>
-          <img src={tentImage1} width="300"/>
+        <div className='tent-image-container'>
+          <div className='tent-image' onClick={() => setOpen(true)}>
+            <img src={mansionImages[0]} width="300"/>
+            <span className="image-arrow">
+              <span className="material-symbols-outlined">
+                arrow_upward
+              </span>
+              <p>Vaata pilte</p>
+            </span>
+          </div>
         </div>
       </div>
+      <Lightbox
+      plugins={[Thumbnails]}
+        open={open}
+        close={() => setOpen(false)}
+        slides={
+          mansionImages.map((image) => ({
+            src: image,
+          }))
+        }
+      />
     </motion.div>
   )
 }
