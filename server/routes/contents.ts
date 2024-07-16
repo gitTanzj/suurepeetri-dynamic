@@ -3,7 +3,7 @@ import { getAboutContent, getContactContent, getTentContent, getMansionContent }
 
 const router = express.Router();
 
-router.get('/about', getAboutContent);
+router.get('/contents', getAboutContent);
 router.get('/contact', getContactContent)
 router.get('/tent', getTentContent)
 router.get('/mansion', getMansionContent)
