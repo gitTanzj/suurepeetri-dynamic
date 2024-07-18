@@ -12,6 +12,7 @@ import { AboutPage } from './pages/AboutPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { ContactPage } from './pages/ContactPage';
 
+import { Logo } from './components/Logo'
 
 export const App = () => {
 

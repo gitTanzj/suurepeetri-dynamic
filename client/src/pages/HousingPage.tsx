@@ -8,6 +8,8 @@ import mansionImage from '../mockData/Uks.png'
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'
 
+import { Logo } from '../components/Logo'
+
 export const HousingPage = () => {
   const navigate = useNavigate()
 
@@ -25,6 +27,9 @@ export const HousingPage = () => {
               chevron_left
           </span>
       </div>
+
+      <Logo/>
+      
       <div className="housing-options">
 
         <Link to='/majutus/telk'>

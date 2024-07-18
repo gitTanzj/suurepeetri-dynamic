@@ -1,12 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 const PORT = 4000;
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000'],
-    methods: ['GET', 'POST', 'DELETE', 'PUT']
+    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: ['Content-Type', 'User-Agent', 'Range'],
 }));
 
 app.use(bodyParser.json());
@@ -17,10 +18,10 @@ app.get('/', (req, res) => {
 })
 
 import imagesRouter from './routes/images';
-app.get('/images', imagesRouter)
+app.use('/api/images', imagesRouter)
 
 import contentsRouter from './routes/contents';
-app.get('/contents', contentsRouter)
+app.use('/api/contents', contentsRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

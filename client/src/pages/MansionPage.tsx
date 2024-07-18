@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { pageTransitionToRight } from '../animations/pageTransitions'
 import { motion } from 'framer-motion'
+import axios from 'axios';
 
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
@@ -17,8 +18,20 @@ import { ContactButton } from '../components/ContactButton'
 
 export const MansionPage = () => {
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [mansionTitle, setMansionTitle] = useState<string>("");
+  const [mansionContent, setMansionContent] = useState<string>("");
 
+  useEffect(() => {
+      axios.get('http://localhost:4000/api/contents/housing/mansion')
+        .then(res => {
+          const contents = res.data[0]
+          setMansionTitle(contents.TITLE)
+          setMansionContent(contents.CONTENT)
+        })
+        .catch(err => console.log(err))
+  }, [])
+
+  const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate()
 
   const mansionImages = [
@@ -42,9 +55,9 @@ export const MansionPage = () => {
       </div>
       <div className='tent-content'>
         <div className='tent-text'>
-          <h2>Häärber</h2>
+          <h2>{mansionTitle}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {mansionContent}
           </p>
           <ContactButton/>
         </div>

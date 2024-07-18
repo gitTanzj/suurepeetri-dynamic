@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './TentPage.css'
+import axios from 'axios';
 
 import tentImage1 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-01.jpg'
 import tentImage2 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-03.jpg'
@@ -26,8 +27,20 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 export const TentPage = () => {
 
-  const navigate = useNavigate()
+  const [tentTitle, setTentTitle] = useState<string>("");
+  const [tentContent, setTentContent] = useState<string>("");
 
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/contents/housing/tent')
+      .then(res => {
+        const contents = res.data[0]
+        setTentTitle(contents.TITLE)
+        setTentContent(contents.CONTENT)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+  const navigate = useNavigate()
   const [open, setOpen] = useState<boolean>(false);
 
   const tentImages = [
@@ -59,9 +72,9 @@ export const TentPage = () => {
       </div>
       <div className='tent-content'>
         <div className='tent-text'>
-          <h2>Telk</h2>
+          <h2>{tentTitle}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {tentContent}
           </p>
           <ContactButton/>
         </div>

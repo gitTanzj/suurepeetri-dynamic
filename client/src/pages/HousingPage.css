@@ -7,13 +7,6 @@
     width: 100%;
 }
 
-/* .housing-container h2{
-    font-size: 3em;
-    font-weight: 400;
-    margin: 0;
-    padding: 0;
-} */
-
 .housing-options{
     display: flex;
     justify-content: center;
@@ -31,10 +24,13 @@
 
 .housing-option{
     display: flex;
+    width: 90%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transition: 0.2s;
+    margin: 0;
+    /* border: 2px solid red; */
 }
 
 .housing-option:hover{
@@ -46,8 +42,9 @@
     transform: scale(1);
 }
 
-.housing-option h3{
+.housing-option h2{
     text-align: center;
+    margin: 0;
 }
 
 .housing-option img{

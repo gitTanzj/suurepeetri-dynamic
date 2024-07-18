@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './GalleryPage.css'
 
 import { Gallery } from '../components/Gallery'
-
+import { Logo } from '../components/Logo'
 
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'
@@ -27,6 +27,7 @@ export const GalleryPage = () => {
               chevron_left
           </span>
       </div>
+      <Logo/>
       <Gallery/>
     </motion.div>
   )
