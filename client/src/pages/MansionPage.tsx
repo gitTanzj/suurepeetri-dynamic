@@ -25,8 +25,8 @@ export const MansionPage = () => {
       axios.get('http://localhost:4000/api/contents/housing/mansion')
         .then(res => {
           const contents = res.data[0]
-          setMansionTitle(contents.TITLE)
-          setMansionContent(contents.CONTENT)
+          setMansionTitle(contents.title)
+          setMansionContent(contents.content)
         })
         .catch(err => console.log(err))
   }, [])

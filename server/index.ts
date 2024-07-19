@@ -13,8 +13,12 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    console.log(req.method, req.path, req.ip);
+});
+
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('This is the Suurepeetri website API!')
 })
 
 import imagesRouter from './routes/images';

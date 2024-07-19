@@ -34,8 +34,8 @@ export const TentPage = () => {
     axios.get('http://localhost:4000/api/contents/housing/tent')
       .then(res => {
         const contents = res.data[0]
-        setTentTitle(contents.TITLE)
-        setTentContent(contents.CONTENT)
+        setTentTitle(contents.title)
+        setTentContent(contents.content)
       })
       .catch(err => console.log(err))
   }, [])

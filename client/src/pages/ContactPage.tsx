@@ -10,9 +10,9 @@ import { pageTransitionToRight } from '../animations/pageTransitions'
 import { Logo } from '../components/Logo'
 
 interface ContactContent {
-  EMAIL?: string,
-  PHONE_NUMBER?: string,
-  ADDRESS?: string
+  email?: string,
+  phone_number?: string,
+  address?: string
 }
 
 export const ContactPage = () => {
@@ -24,11 +24,11 @@ export const ContactPage = () => {
     axios.get('http://localhost:4000/api/contents/contact')
     .then(res => {
         const contents = res.data[0]
-        setContactTitle(contents.TITLE)
+        setContactTitle(contents.title)
         setContactContent({
-          EMAIL: contents.EMAIL ? contents.EMAIL : "",
-          PHONE_NUMBER: contents.PHONE_NUMBER ? contents.PHONE_NUMBER : "",
-          ADDRESS: contents.ADDRESS ? contents.ADDRESS : ""
+          email: contents.email ? contents.email : "",
+          phone_number: contents.phone_number ? contents.phone_number : "",
+          address: contents.address ? contents.address : ""
         })
     })
     .catch(err => console.log(err))

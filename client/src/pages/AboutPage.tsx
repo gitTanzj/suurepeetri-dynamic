@@ -17,8 +17,8 @@ export const AboutPage = () => {
         axios.get('http://localhost:4000/api/contents/about')
             .then(res => {
                 const contents = res.data[0]
-                setAboutTitle(contents.TITLE)
-                setAboutContent(contents.CONTENT)
+                setAboutTitle(contents.title)
+                setAboutContent(contents.content)
             })
             .catch(err => console.log(err))
     }, [])
