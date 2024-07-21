@@ -46,9 +46,10 @@ const getAboutContent = async (req: Request, res: Response) => {
 
 const changeAboutContent = async (req: Request, res: Response) => {
     const { title, content } = req.body
-    await pool.query('UPDATE ABOUT_CONTENTS SET TITLE = ?, CONTENT = ? WHERE id = 1', [title, content])
+    const id = req.params.id;
+    await pool.query('UPDATE ABOUT_CONTENTS SET TITLE = ?, CONTENT = ? WHERE id = ?', [title, content, id])
     .then(response => {
-        res.status(201).json(response)
+        res.status(201).json({data: response})
     }).catch(err => {
         res.status(400).send('Failed to update about content')
     });
@@ -80,7 +81,8 @@ const getContactContent = async (req: Request, res: Response) => {
 
 const changeContactContent = async (req: Request, res: Response) => {
     const { title, email, phone_number, address } = req.body
-    await pool.query('UPDATE CONTACT_CONTENTS SET TITLE = ?, EMAIL = ?, PHONE_NUMBER = ?, ADDRESS = ? WHERE id = 1', [title, email, phone_number, address])
+    const id = req.params.id;
+    await pool.query('UPDATE CONTACT_CONTENTS SET TITLE = ?, EMAIL = ?, PHONE_NUMBER = ?, ADDRESS = ? WHERE id = ?', [title, email, phone_number, address, id])
     .then(response => {
         res.status(201).json(response)
     }).catch(err => {

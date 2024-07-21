@@ -17,8 +17,8 @@ router.get('/contact', getContactContent);
 router.get('/housing', getHousingOptionsContent);
 router.get('/housing/:type', getHousingOptionContent);
 
-router.post('/about/update',  changeAboutContent);
-router.post('/contact/update', changeContactContent);
-router.post('/housing/:type/update', changeHousingOptionContent);
+router.put('/about/:id',  changeAboutContent);
+router.put('/contact/:id', changeContactContent);
+router.put('/housing/:id', changeHousingOptionContent);
 
 export default router;
