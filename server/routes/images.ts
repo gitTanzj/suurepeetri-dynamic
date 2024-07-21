@@ -1,9 +1,19 @@
 import express from 'express';
-import { getImages } from '../controllers/imagesController';
+import {
+    getGalleryImages,
+    getAboutImages,
+    getTentImages,
+    getMansionImages,
+    getContactImages
+} from '../controllers/imagesController';
 
 const router = express.Router();
 
-router.get('/images', getImages);
+router.get('/about', getAboutImages);
+router.get('/tent', getTentImages);
+router.get('/mansion', getMansionImages);
+router.get('/gallery', getGalleryImages);
+router.get('/contact', getContactImages);
 
 
 export default router;

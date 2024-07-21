@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './GalleryPage.css'
+import axios from 'axios'
 
 import { Gallery } from '../components/Gallery'
-
+import { Logo } from '../components/Logo'
 
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'
 
-
 export const GalleryPage = () => {
+
+  const [images, setImages] = useState<string[]>([])
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/images/gallery')
+      .then(res => {
+        setImages(res.data)
+      })
+      .catch(err => console.log(err))
+  }, [])
 
   const navigate = useNavigate();
   return (
@@ -27,7 +37,8 @@ export const GalleryPage = () => {
               chevron_left
           </span>
       </div>
-      <Gallery/>
+      <Logo/>
+      <Gallery images={images} page='gallery'/>
     </motion.div>
   )
 }

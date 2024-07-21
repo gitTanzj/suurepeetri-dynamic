@@ -11,6 +11,7 @@ a{
     align-items: end;
     height: 40vh;
     padding-bottom: 5em;
+    
 }
 
 .navbar{
@@ -20,6 +21,11 @@ a{
 
 .navbar a{
     padding: 10px 25px 10px 25px;
+    transition: 0.2s;
+}
+
+.navbar a:hover{
+    background-color: rgba(256, 256, 256, 0.75);
 }
 
 .navbar a:not(:last-child){

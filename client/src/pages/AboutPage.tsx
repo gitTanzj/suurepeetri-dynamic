@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AboutPage.css'
 import { Link, useNavigate } from 'react-router-dom'
 import aboutImage from '../assets/meist.jpg'
+import axios from 'axios'
 
 import { motion } from 'framer-motion'
 
@@ -9,9 +10,27 @@ import { pageTransitionToRight } from '../animations/pageTransitions'
 
 export const AboutPage = () => {
 
-    const navigate = useNavigate()
+    const [aboutTitle, setAboutTitle] = useState<string>("");
+    const [aboutContent, setAboutContent] = useState<string>("");
 
-    console.log(aboutImage)
+    const [images, setImages] = useState<string[]>([])
+
+    useEffect(() => {
+        axios.get('http://localhost:4000/api/contents/about')
+            .then(res => {
+                const contents = res.data[0]
+                setAboutTitle(contents.title)
+                setAboutContent(contents.content)
+            })
+            .catch(err => console.log(err));
+        axios.get('http://localhost:4000/api/images/about')
+            .then(res => {
+                setImages(res.data)
+            })
+            .catch(err => console.log(err));
+    }, [])
+
+    const navigate = useNavigate()
 
     return (
         <motion.div
@@ -30,13 +49,13 @@ export const AboutPage = () => {
             </div>
             <div className='about-content'>
                 <div className='about-text'>
-                    <h2>Meist</h2>
+                    <h2>{aboutTitle}</h2>
                     <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        {aboutContent}
                     </p>
                 </div>
                 <div className='about-image'>
-                    <img src={aboutImage} alt="Pilt meist"/>
+                    <img src={`http://localhost:4000/images/about/${images[0]}`} alt="Pilt meist"/>
                 </div>
             </div>
         </motion.div>

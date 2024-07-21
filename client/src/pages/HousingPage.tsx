@@ -2,11 +2,13 @@ import React from 'react'
 import './HousingPage.css'
 import { useNavigate, Link, Outlet } from 'react-router-dom';
 
-import tentImage from '../mockData/Telk.png'
-import mansionImage from '../mockData/Uks.png'
+import tentImage from '../assets/Telk.png'
+import mansionImage from '../assets/Uks.png'
 
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'
+
+import { Logo } from '../components/Logo'
 
 export const HousingPage = () => {
   const navigate = useNavigate()
@@ -25,6 +27,9 @@ export const HousingPage = () => {
               chevron_left
           </span>
       </div>
+
+      <Logo/>
+      
       <div className="housing-options">
 
         <Link to='/majutus/telk'>

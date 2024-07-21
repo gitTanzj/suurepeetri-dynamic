@@ -1,5 +1,6 @@
 .images-container{
-    width: 80%;;
+    width: 80%;
+    padding-top: 200px;
     columns: 15rem 3;
     gap: 1.4rem;
     margin-top: 1rem;
@@ -16,4 +17,10 @@
 .images-container img:hover{
     cursor: pointer;
     filter: brightness(0.8);
+}
+
+@media screen and (max-width: 1024px) {
+    .images-container{
+        padding-top: 150px;
+    }
 }

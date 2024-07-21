@@ -1,16 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './TentPage.css'
-
-import tentImage1 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-01.jpg'
-import tentImage2 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-03.jpg'
-import tentImage3 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-04.jpg'
-import tentImage4 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-05.jpg'
-import tentImage5 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-06.jpg'
-import tentImage6 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-07.jpg'
-import tentImage7 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-08.jpg'
-import tentImage8 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-09.jpg'
-import tentImage9 from '../mockData/tentImages/24_06_28_Suurepeetri telkmajutus-10.jpg'
-
+import axios from 'axios';
 
 import { pageTransitionToRight } from '../animations/pageTransitions'
 import { motion } from 'framer-motion'
@@ -24,27 +14,36 @@ import "yet-another-react-lightbox/styles.css";
 import { Thumbnails } from "yet-another-react-lightbox/plugins";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 
+
+import { Gallery } from '../components/Gallery'
+
 export const TentPage = () => {
 
-  const navigate = useNavigate()
+  const [tentTitle, setTentTitle] = useState<string>("");
+  const [tentContent, setTentContent] = useState<string>("");
+  const [tentImages, setTentImages] = useState<string[]>([])
 
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/contents/housing/tent')
+      .then(res => {
+        const contents = res.data[0]
+        setTentTitle(contents.title)
+        setTentContent(contents.content)
+      })
+      .catch(err => console.log(err))
+    axios.get('http://localhost:4000/api/images/tent')
+      .then(res => {
+        setTentImages(res.data)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+  const navigate = useNavigate()
   const [open, setOpen] = useState<boolean>(false);
 
-  const tentImages = [
-    tentImage1,
-    tentImage2,
-    tentImage3,
-    tentImage4,
-    tentImage5,
-    tentImage6,
-    tentImage7,
-    tentImage8,
-    tentImage9
-
-  ]
-
   return (
-    <motion.div
+    <>
+      <motion.div
       className='tent-container'
       variants={pageTransitionToRight}
       initial='initial'
@@ -59,15 +58,15 @@ export const TentPage = () => {
       </div>
       <div className='tent-content'>
         <div className='tent-text'>
-          <h2>Telk</h2>
+          <h2>{tentTitle}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {tentContent}
           </p>
           <ContactButton/>
         </div>
         <div className='tent-image-container'>
           <div className='tent-image' onClick={() => setOpen(true)}>
-            <img src={tentImages[0]} width="300"/>
+            <img src={`http://localhost:4000/images/tent/${tentImages[0]}`} width="300"/>
             <span className="image-arrow">
               <span className="material-symbols-outlined">
                 arrow_upward
@@ -83,10 +82,21 @@ export const TentPage = () => {
         close={() => setOpen(false)}
         slides={
           tentImages.map((image) => ({
-            src: image,
+            src: `http://localhost:4000/images/tent/${image}`,
           }))
         }
       />
+      
     </motion.div>
+    <motion.div
+      className="external-gallery-container"
+      variants={pageTransitionToRight}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+    >
+      <Gallery images={tentImages} page='tent'/>
+    </motion.div>
+    </>
   )
 }
