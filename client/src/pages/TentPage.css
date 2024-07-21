@@ -79,6 +79,13 @@
     animation: arrowUpAndDown 1s infinite;
 }
 
+.external-gallery-container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 @keyframes arrowUpAndDown{
     0%{
         transform: translateY(0);
@@ -92,14 +99,18 @@
 }
 
 @media screen and (max-width: 1024px) {
+    .tent-container{
+        min-height: 60vh;
+    }
     .tent-content{
-        height: 90%;
-        width: 90%;
+        width: 95%;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-
+    .tent-image-container{
+        display: none;
+    }
     .tent-text{
         flex: auto;
         justify-content: flex-start;
@@ -114,5 +125,8 @@
     }
     .tent-text p{
         margin-bottom: 1em;
+    }
+    .external-gallery-container{
+        display:flex;
     }
 }

@@ -22,14 +22,6 @@ interface HousingOptionContent {
     PAGE: string
 }
 
-// const getAboutContent = async (req: Request, res: Response) => {
-//     const [rows, fields] = await pool.query('SELECT * FROM ABOUT_CONTENTS') as [AboutContent[], any];
-
-
-//     res.header('Content-Range', `about=0-${rows.length - 1}`).header('Access-Control-Expose-Headers', 'Content-Range');
-//     res.status(200).json(rows as AboutContent[]);
-// }
-
 const getAboutContent = async (req: Request, res: Response) => {
     try {
         const [rows, fields] = await pool.query('SELECT * FROM ABOUT_CONTENTS') as [AboutContent[], any];

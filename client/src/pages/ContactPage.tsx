@@ -20,6 +20,8 @@ export const ContactPage = () => {
     const [contactTitle, setContactTitle] = useState<string>("");
     const [contactContent, setContactContent] = useState<ContactContent>({});
 
+    const [images, setImages] = useState<string[]>([]);
+
   useEffect(() => {
     axios.get('http://localhost:4000/api/contents/contact')
     .then(res => {
@@ -32,6 +34,11 @@ export const ContactPage = () => {
         })
     })
     .catch(err => console.log(err))
+    axios.get('http://localhost:4000/api/images/contact')
+      .then(res => {
+          setImages(res.data)
+      })
+      .catch(err => console.log(err))
   }, [])
 
   const navigate = useNavigate()
@@ -63,7 +70,7 @@ export const ContactPage = () => {
             </div>
           </div>
           <div className='contact-image'>
-            <img src={contactImage}/>
+            <img src={`http://localhost:4000/images/contact/${images[0]}`} alt="kontakt-pilt"/>
           </div>
         </div>
     </motion.div>

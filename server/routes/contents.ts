@@ -8,7 +8,6 @@ import {
     changeAboutContent,
     changeContactContent,
     changeHousingOptionContent
-
 } from '../controllers/contentsController';
 
 const router = express.Router();

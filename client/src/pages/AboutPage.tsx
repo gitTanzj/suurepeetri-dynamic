@@ -13,6 +13,8 @@ export const AboutPage = () => {
     const [aboutTitle, setAboutTitle] = useState<string>("");
     const [aboutContent, setAboutContent] = useState<string>("");
 
+    const [images, setImages] = useState<string[]>([])
+
     useEffect(() => {
         axios.get('http://localhost:4000/api/contents/about')
             .then(res => {
@@ -20,7 +22,12 @@ export const AboutPage = () => {
                 setAboutTitle(contents.title)
                 setAboutContent(contents.content)
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
+        axios.get('http://localhost:4000/api/images/about')
+            .then(res => {
+                setImages(res.data)
+            })
+            .catch(err => console.log(err));
     }, [])
 
     const navigate = useNavigate()
@@ -48,7 +55,7 @@ export const AboutPage = () => {
                     </p>
                 </div>
                 <div className='about-image'>
-                    <img src={aboutImage} alt="Pilt meist"/>
+                    <img src={`http://localhost:4000/images/about/${images[0]}`} alt="Pilt meist"/>
                 </div>
             </div>
         </motion.div>
