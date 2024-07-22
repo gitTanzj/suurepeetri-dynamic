@@ -9,5 +9,5 @@ const pool = mysql.createPool({
     database: 'suurepeetri_test'
 })
 
-export default pool
+export default pool;
 

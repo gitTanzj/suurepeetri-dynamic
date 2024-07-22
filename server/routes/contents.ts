@@ -14,6 +14,8 @@ import {
     changeHousingOptionContent
 } from '../controllers/contentsController';
 
+import authenticateToken from '../middleware/authMiddleware';
+
 const router = express.Router();
 
 router.get('/about', getAboutContent);
@@ -25,8 +27,8 @@ router.get('/contact/:id', getOneContactContent);
 router.get('/housing', getHousingOptionsContent);
 router.get('/housing/:id', getHousingOptionContent);
 
-router.put('/about/:id',  changeAboutContent);
-router.put('/contact/:id', changeContactContent);
-router.put('/housing/:id', changeHousingOptionContent);
+router.put('/about/:id',  authenticateToken, changeAboutContent);
+router.put('/contact/:id', authenticateToken, changeContactContent);
+router.put('/housing/:id', authenticateToken, changeHousingOptionContent);
 
 export default router;
