@@ -1,17 +1,16 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin';
 
-const ContactEdit = (props: any) => {
+const HousingEdit = (props: any) => {
     return (
         <Edit {...props} mutationMode='pessimistic'>
             <SimpleForm>
                 <TextInput disabled source="id" />
                 <TextInput source="title" />
-                <TextInput source="email" />
-                <TextInput source="phone_number" />
-                <TextInput source="address" />
+                <TextInput source="content" multiline />
+                <TextInput disabled source="page"/>
             </SimpleForm>
         </Edit>
     );
 };
 
-export default ContactEdit;
+export default HousingEdit;

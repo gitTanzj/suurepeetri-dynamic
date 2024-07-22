@@ -10,7 +10,7 @@ const HousingList = (props: any) => {
             <TextField source="id"/>
             <TextField source="title"/>
             <TextField source="content"/>
-            <EditButton resource="housing/tent" />
+            <EditButton resource="housing" />
         </Datagrid>
     </List>
 };

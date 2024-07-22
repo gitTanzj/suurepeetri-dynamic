@@ -36,8 +36,31 @@ const getAboutContent = async (req: Request, res: Response) => {
             content: row.CONTENT
         }));
 
-        res.header('Content-Range', `about=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.header('Content-Range', `count=0-${data.length - 1}/${data.length}`).header('Access-Control-Expose-Headers', 'Content-Range');
         res.status(200).json(data);
+    } catch (error) {
+        console.error("Error fetching about content: ", error);
+        res.status(500).send('Failed to fetch about content');
+    }
+}
+
+const getOneAboutContent = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+        const [rows, fields] = await pool.query('SELECT * FROM ABOUT_CONTENTS WHERE ID = ?', [id]) as [AboutContent[], any];
+
+        if (!rows.length) {
+            return res.status(404).send('No content found');
+        }
+
+        const data = rows.map(row => ({
+            id: row.ID,
+            title: row.TITLE,
+            content: row.CONTENT
+        }));
+
+        res.header('Content-Range', `count=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.status(200).json(data[0]);
     } catch (error) {
         console.error("Error fetching about content: ", error);
         res.status(500).send('Failed to fetch about content');
@@ -47,12 +70,20 @@ const getAboutContent = async (req: Request, res: Response) => {
 const changeAboutContent = async (req: Request, res: Response) => {
     const { title, content } = req.body
     const id = req.params.id;
-    await pool.query('UPDATE ABOUT_CONTENTS SET TITLE = ?, CONTENT = ? WHERE id = ?', [title, content, id])
-    .then(response => {
-        res.status(201).json({data: response})
-    }).catch(err => {
-        res.status(400).send('Failed to update about content')
-    });
+    try {
+        await pool.query('UPDATE ABOUT_CONTENTS SET TITLE = ?, CONTENT = ? WHERE ID = ?', [title, content, id]);
+
+        const updatedData = {
+            id: id,
+            title: title,
+            content: content
+        };
+
+        res.status(200).json(updatedData);
+    } catch (err) {
+        console.error("Failed to update about content: ", err);
+        res.status(400).send('Failed to update about content');
+    }
 }
 
 const getContactContent = async (req: Request, res: Response) => {
@@ -71,7 +102,7 @@ const getContactContent = async (req: Request, res: Response) => {
             address: row.ADDRESS
         }));
 
-        res.header('Content-Range', `contact=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.header('Content-Range', `count=0-${data.length - 1}/${data.length}`).header('Access-Control-Expose-Headers', 'Content-Range');
         res.status(200).json(data);
     } catch (error) {
         console.error("Error fetching contact content: ", error);
@@ -79,15 +110,51 @@ const getContactContent = async (req: Request, res: Response) => {
     }
 }
 
+const getOneContactContent = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+        const [rows, fields] = await pool.query('SELECT * FROM CONTACT_CONTENTS WHERE ID = ?', [id]) as [ContactContent[], any];
+
+        if (!rows.length) {
+            return res.status(404).send('No content found');
+        }
+
+        const data = rows.map(row => ({
+            id: row.ID,
+            title: row.TITLE,
+            email: row.EMAIL,
+            phone_number: row.PHONE_NUMBER,
+            address: row.ADDRESS
+        }));
+
+        res.header('Content-Range', `count=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.status(200).json(data[0]);
+    } catch (error) {
+        console.error("Error fetching contact content: ", error);
+        res.status(500).send('Failed to fetch contact content');
+    }
+
+}
+
 const changeContactContent = async (req: Request, res: Response) => {
     const { title, email, phone_number, address } = req.body
     const id = req.params.id;
-    await pool.query('UPDATE CONTACT_CONTENTS SET TITLE = ?, EMAIL = ?, PHONE_NUMBER = ?, ADDRESS = ? WHERE id = ?', [title, email, phone_number, address, id])
-    .then(response => {
-        res.status(201).json(response)
-    }).catch(err => {
-        res.status(400).send('Failed to update about content')
-    });
+    try {
+        await pool.query('UPDATE CONTACT_CONTENTS SET TITLE = ?, EMAIL = ?, PHONE_NUMBER = ?, ADDRESS = ? WHERE ID = ?',[title, email, phone_number, address, id]);
+
+        const updatedData = {
+            id: id,
+            title: title,
+            email: email,
+            phone_number: phone_number,
+            address: address
+        };
+
+        res.status(200).json(updatedData);
+    } catch (err) {
+        console.error("Failed to update contact content: ", err);
+        res.status(400).send('Failed to update contact content');
+    }
 }
 
 const getHousingOptionsContent = async (req: Request, res: Response) => {
@@ -105,7 +172,7 @@ const getHousingOptionsContent = async (req: Request, res: Response) => {
             page: row.PAGE
         }));
 
-        res.header('Content-Range', `housing=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.header('Content-Range', `count=0-${data.length - 1}/${data.length}`).header('Access-Control-Expose-Headers', 'Content-Range');
         res.status(200).json(data);
     } catch (error){
         console.error(`Error fetching housing options content: `, error);
@@ -114,9 +181,9 @@ const getHousingOptionsContent = async (req: Request, res: Response) => {
 }
 
 const getHousingOptionContent = async (req: Request, res: Response) => {
-    const type = req.params.type;
+    const id = req.params.id;
     try {
-        const [rows, fields] = await pool.query('SELECT * FROM HOUSING_OPTIONS WHERE PAGE = ?;', [type]) as [HousingOptionContent[], any];
+        const [rows, fields] = await pool.query('SELECT * FROM HOUSING_OPTIONS WHERE ID = ?;', [id]) as [HousingOptionContent[], any];
 
         if (!rows.length) {
             return res.status(404).send('No content found');
@@ -125,33 +192,47 @@ const getHousingOptionContent = async (req: Request, res: Response) => {
         const data = rows.map(row => ({
             id: row.ID,
             title: row.TITLE,
-            content: row.CONTENT
+            content: row.CONTENT,
+            page: row.PAGE
         }));
 
-        res.header('Content-Range', `${type}=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
-        res.status(200).json(data);
+        res.header('Content-Range', `count=0-1`).header('Access-Control-Expose-Headers', 'Content-Range');
+        res.status(200).json(data[0]);
     } catch (error) {
-        console.error(`Error fetching ${type} content: `, error);
-        res.status(500).send(`Failed to fetch ${type} content`);
+        console.error(`Error fetching content: `, error);
+        res.status(500).send(`Failed to fetch content`);
     }
 }
 
 const changeHousingOptionContent = async (req: Request, res: Response) => {
-    const type = req.params.type;
-    const { title, content } = req.body;
-    await pool.query('UPDATE HOUSING_OPTIONS SET TITLE = ?, CONTENT = ? WHERE PAGE = ?', [title, content, type])
-    .then(response => {
-        res.status(201).json(response)
-    }).catch(err => {
-        res.status(400).send('Failed to update about content')
-    });
+    const { title, content, page } = req.body
+    const id = req.params.id;
+    try {
+        await pool.query('UPDATE HOUSING_OPTIONS SET TITLE = ?, CONTENT = ? WHERE ID = ?', [title, content, id]);
+
+        const updatedData = {
+            id: id,
+            title: title,
+            content: content,
+            page: page
+        };
+
+        res.status(200).json(updatedData);
+    } catch (err) {
+        console.error(`Failed to update ${page} content: `, err);
+        res.status(400).send(`Failed to update ${page} content`);
+    }
 }
 
 
 
 export {
     getAboutContent,
+    getOneAboutContent,
+
     getContactContent,
+    getOneContactContent,
+
     getHousingOptionsContent,
     getHousingOptionContent,
 
