@@ -6,13 +6,13 @@ import { List,
 
 const ContactList = (props: any) => {
     return <List {...props}>
-        <Datagrid>
+        <Datagrid bulkActionButtons={false}>
             <TextField source="id"/>
             <TextField source="title"/>
             <TextField source="email"/>
             <TextField source="phone_number"/>
             <TextField source="address"/>
-            <EditButton resource="contact" />
+            <EditButton resource="contents/contact" />
         </Datagrid>
     </List>
 };

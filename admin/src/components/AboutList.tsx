@@ -6,11 +6,11 @@ import { List,
 
 const AboutList = (props: any) => {
     return <List {...props}>
-        <Datagrid>
+        <Datagrid bulkActionButtons={false}>
             <TextField source="id"/>
             <TextField source="title"/>
             <TextField source="content"/>
-            <EditButton resource="about" />
+            <EditButton resource="contents/about" />
         </Datagrid>
     </List>
 };

@@ -24,9 +24,9 @@ export const TentPage = () => {
   const [tentImages, setTentImages] = useState<string[]>([])
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/contents/housing/tent')
+    axios.get('http://localhost:4000/api/contents/housing/1')
       .then(res => {
-        const contents = res.data[0]
+        const contents = res.data
         setTentTitle(contents.title)
         setTentContent(contents.content)
       })

@@ -1,7 +1,11 @@
 import express from 'express';
 import {
     getAboutContent,
+    getOneAboutContent,
+
     getContactContent,
+    getOneContactContent,
+
     getHousingOptionsContent,
     getHousingOptionContent,
 
@@ -10,15 +14,21 @@ import {
     changeHousingOptionContent
 } from '../controllers/contentsController';
 
+import authenticateToken from '../middleware/authMiddleware';
+
 const router = express.Router();
 
 router.get('/about', getAboutContent);
-router.get('/contact', getContactContent);
-router.get('/housing', getHousingOptionsContent);
-router.get('/housing/:type', getHousingOptionContent);
+router.get('/about/:id', getOneAboutContent);
 
-router.post('/about/update',  changeAboutContent);
-router.post('/contact/update', changeContactContent);
-router.post('/housing/:type/update', changeHousingOptionContent);
+router.get('/contact', getContactContent);
+router.get('/contact/:id', getOneContactContent);
+
+router.get('/housing', getHousingOptionsContent);
+router.get('/housing/:id', getHousingOptionContent);
+
+router.put('/about/:id',  authenticateToken, changeAboutContent);
+router.put('/contact/:id', authenticateToken, changeContactContent);
+router.put('/housing/:id', authenticateToken, changeHousingOptionContent);
 
 export default router;

@@ -20,9 +20,9 @@ export const MansionPage = () => {
   const [mansionImages, setMansionImages] = useState<string[]>([])
 
   useEffect(() => {
-      axios.get('http://localhost:4000/api/contents/housing/mansion')
+      axios.get('http://localhost:4000/api/contents/housing/2')
         .then(res => {
-          const contents = res.data[0]
+          const contents = res.data
           setMansionTitle(contents.title)
           setMansionContent(contents.content)
         })

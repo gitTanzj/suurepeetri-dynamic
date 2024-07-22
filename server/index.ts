@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
@@ -10,13 +10,15 @@ const imagesDirectory = path.join(__dirname, '/images');
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
-    allowedHeaders: ['Content-Type', 'User-Agent', 'Range'],
+    allowedHeaders: ['Content-Type', 'User-Agent', 'Range', 'Content-Range', 'Authorization'],
+    credentials: true
 }));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req: Request, res: Response, next: Function) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     console.log(req.method, req.path, req.ip);
     next();
 });
@@ -26,6 +28,9 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/images', express.static(imagesDirectory));
+
+import adminRouter from './routes/admin';
+app.use('/api/admin', adminRouter);
 
 import imagesRouter from './routes/images';
 app.use('/api/images', imagesRouter);
