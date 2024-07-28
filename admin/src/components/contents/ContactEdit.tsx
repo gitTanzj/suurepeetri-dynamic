@@ -1,5 +1,5 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin';
-import SaveOnlyToolbar from './Toolbar';
+import SaveOnlyToolbar from '../Toolbar';
 
 const ContactEdit = (props: any) => {
     return (

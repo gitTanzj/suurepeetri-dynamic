@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 interface User {
     id: number;
@@ -13,7 +15,7 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     
     if (token == null) return res.sendStatus(401);
   
-    jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    jwt.verify(token, process.env.JWS_SECRET || '', (err, user) => {
       if (err) return res.sendStatus(403);
       req.body.user = user as User;
       next();

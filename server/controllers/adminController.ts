@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import pool from '../utils/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 interface userData {
     ID: number,
@@ -32,7 +34,7 @@ const adminLogin = async (req: Request, res: Response) => {
         }))[0];
 
         if (user && await bcrypt.compare(password, user.password)) {
-            const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id }, process.env.JWS_SECRET || '', { expiresIn: '1h' });
             res.json({ token });
         } else {
             res.status(401).send('Invalid credentials');

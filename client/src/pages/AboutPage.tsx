@@ -13,7 +13,7 @@ export const AboutPage = () => {
     const [aboutTitle, setAboutTitle] = useState<string>("");
     const [aboutContent, setAboutContent] = useState<string>("");
 
-    const [images, setImages] = useState<string[]>([])
+    const [images, setImages] = useState<{id: number, src: string}[]>([])
 
     useEffect(() => {
         axios.get('http://localhost:4000/api/contents/about')
@@ -55,7 +55,7 @@ export const AboutPage = () => {
                     </p>
                 </div>
                 <div className='about-image'>
-                    <img src={`http://localhost:4000/images/about/${images[0]}`} alt="Pilt meist"/>
+                    <img src={`http://localhost:4000/images/about/${images[0].src}`} alt="Pilt meist"/>
                 </div>
             </div>
         </motion.div>
