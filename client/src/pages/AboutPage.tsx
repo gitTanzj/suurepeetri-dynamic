@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import './AboutPage.css'
-import { Link, useNavigate } from 'react-router-dom'
-import aboutImage from '../assets/meist.jpg'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import { motion } from 'framer-motion'
 
 import { pageTransitionToRight } from '../animations/pageTransitions'
 
+interface Image {
+    id: number,
+    title: string,
+    url: string,
+}  
+
 export const AboutPage = () => {
 
     const [aboutTitle, setAboutTitle] = useState<string>("");
     const [aboutContent, setAboutContent] = useState<string>("");
 
-    const [images, setImages] = useState<{id: number, src: string}[]>([])
+    const [images, setImages] = useState<Image[]>([])
 
     useEffect(() => {
         axios.get('http://localhost:4000/api/contents/about')
@@ -55,7 +60,7 @@ export const AboutPage = () => {
                     </p>
                 </div>
                 <div className='about-image'>
-                    <img src={`http://localhost:4000/images/about/${images[0].src}`} alt="Pilt meist"/>
+                    { images[0] && <img src={images[0].url} alt={images[0].title}/>}
                 </div>
             </div>
         </motion.div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios';
 import './ContactPage.css'
-import contactImage from '../mockData/contact-backdrop.jpg'
 import { useNavigate } from 'react-router-dom'
 
 import { motion } from 'framer-motion'
@@ -15,12 +14,18 @@ interface ContactContent {
   address?: string
 }
 
+interface Image {
+  id: number,
+  title: string,
+  url: string
+}
+
 export const ContactPage = () => {
 
     const [contactTitle, setContactTitle] = useState<string>("");
     const [contactContent, setContactContent] = useState<ContactContent>({});
 
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/contents/contact')
@@ -70,7 +75,7 @@ export const ContactPage = () => {
             </div>
           </div>
           <div className='contact-image'>
-            <img src={`http://localhost:4000/images/contact/${images[0]}`} alt="kontakt-pilt"/>
+            { images[0] && <img src={images[0].url} alt={images[0].title}/>}
           </div>
         </div>
     </motion.div>

@@ -13,11 +13,17 @@ import { useNavigate } from 'react-router-dom'
 import { ContactButton } from '../components/ContactButton'
 import { Gallery } from '../components/Gallery'
 
+interface Image {
+  id: number,
+  title: string,
+  url: string
+}
+
 export const MansionPage = () => {
 
   const [mansionTitle, setMansionTitle] = useState<string>("");
   const [mansionContent, setMansionContent] = useState<string>("");
-  const [mansionImages, setMansionImages] = useState<string[]>([])
+  const [mansionImages, setMansionImages] = useState<Image[]>([])
 
   useEffect(() => {
       axios.get('http://localhost:4000/api/contents/housing/2')
@@ -62,7 +68,7 @@ export const MansionPage = () => {
           </div>
           <div className='tent-image-container'>
             <div className='tent-image' onClick={() => setOpen(true)}>
-              <img src={`http://localhost:4000/images/mansion/${mansionImages[0]}`} width="300"/>
+              { mansionImages[0] && <img src={mansionImages[0].url} alt={mansionImages[0].title}/>}
               <span className="image-arrow">
                 <span className="material-symbols-outlined">
                   arrow_upward
@@ -78,7 +84,7 @@ export const MansionPage = () => {
           close={() => setOpen(false)}
           slides={
             mansionImages.map((image) => ({
-              src: `http://localhost:4000/images/mansion/${image}`,
+              src: image.url,
             }))
           }
         />
@@ -90,7 +96,7 @@ export const MansionPage = () => {
         animate='animate'
         exit='exit'
       >
-        <Gallery images={mansionImages} page='mansion'/>
+        <Gallery images={mansionImages.map((image: Image) => image.url)} page='mansion'/>
       </motion.div>
     </>
   )
