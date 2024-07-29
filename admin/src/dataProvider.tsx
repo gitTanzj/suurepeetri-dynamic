@@ -74,12 +74,25 @@ export default {
     },
     create: async (resource: string, params: any) => {
         const url = `${apiUrl}/${resource}`;
-        return httpClient(url, {
-            method: 'POST',
-            body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: { ...params.data, id: json.id },
-        }));
+        if (resource.startsWith('images')){
+            const formData = new FormData();
+            formData.append('image', params.data.image.rawFile);
+            formData.append('title', params.data.title);
+            formData.append('tag', resource.split('/')[1].toUpperCase());
+            return httpClient(url, {
+                method: 'POST',
+                body: formData,
+            }).then(({ json }) => ({
+                data: { ...params.data, id: json.id },
+            }));
+        } else {
+            return httpClient(url, {
+                method: 'POST',
+                body: JSON.stringify(params.data),
+            }).then(({ json }) => ({
+                data: { ...params.data, id: json.id },
+            }));
+        }
     },
     delete: async (resource: string, params: any) => {
         const url = `${apiUrl}/${resource}/${params.id}`;

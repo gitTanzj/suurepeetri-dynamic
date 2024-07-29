@@ -1,6 +1,16 @@
 import express from 'express';
 import multer from 'multer';
-const upload = multer({ dest: `./images`})
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({ storage: storage });
 
 import {
     getImageById,
@@ -9,6 +19,7 @@ import {
     getTentImages,
     getMansionImages,
     getContactImages,
+    
     postImage
 } from '../controllers/imagesController';
 
@@ -24,7 +35,7 @@ router.get('/mansion', getMansionImages);
 router.get('/gallery', getGalleryImages);
 router.get('/contact', getContactImages);
 
-router.post('/', authenticateToken, upload.single('image'), postImage);
+router.post('/:page', authenticateToken, upload.single('image'), postImage);
 
 
 export default router;
