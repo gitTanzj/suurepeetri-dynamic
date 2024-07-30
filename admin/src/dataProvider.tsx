@@ -101,6 +101,7 @@ export default {
         }).then(({ json }) => ({
             data: json,
         }));
+        
     },
     deleteMany: async (resource: string, params: any) => {
         const promises = params.ids.map((id: number) =>

@@ -138,14 +138,44 @@ const modifyImage = async (req: Request, res: Response) => {
     res.status(201).send('File uploaded successfully');
 }
 
+
+
 const deleteImage = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const id = req.params.id;
+    const tag = req.params.page.toUpperCase();
+    console.log(id, tag);
     if (!id) {
         return res.status(400).send('No id provided');
     }
+    if (!tag) {
+        return res.status(400).send('No tag provided');
+    }
     try {
-       
-        res.status(204).send('Image deleted successfully');
+        const [delResult] = await pool.query('DELETE FROM IMAGES_TAGS WHERE IMAGE_ID = ? AND TAG = ?', [id, tag]) as [any, any];
+        if (delResult.affectedRows === 0) {
+            return res.status(404).send('No intermediary entry with provided id and tag found');
+        } else {
+            const [rows, fields] = await pool.query('SELECT * FROM IMAGES_TAGS WHERE IMAGE_ID = ?', [id]) as [any[], any];
+            if(rows.length === 0){
+                const [imageURLs] = await pool.query('SELECT URL FROM IMAGES WHERE ID = ?', [id]) as [{URL: string}[], any];
+                const imageURL = imageURLs[0].URL;
+                const [delResult] = await pool.query('DELETE FROM IMAGES WHERE ID = ?', [id]) as [any, any];
+                if (delResult.affectedRows === 0) {
+                    return res.status(404).send('No image with provided id found');
+                } else {
+                    fs.unlink(`./images/${imageURL.split('/').pop()}`)
+                    .then((result) => {
+                        res.status(200).send('Image (including file) deleted successfully');
+                    })
+                    .catch((err) => {
+                        console.error("Error deleting image: ", err);
+                        res.status(500).send('Failed to delete image');
+                    });
+                }
+            } else {
+                res.status(200).send('Image deleted successfully');
+            }   
+        }
     } catch(err) {
         console.error("Error deleting image: ", err);
         res.status(500).send('Failed to delete image');
@@ -160,5 +190,7 @@ export {
     getMansionImages,
     getContactImages,
 
-    postImage
+    postImage,
+    modifyImage,
+    deleteImage
  }
