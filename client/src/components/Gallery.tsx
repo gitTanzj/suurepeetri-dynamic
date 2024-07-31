@@ -7,6 +7,7 @@ import "yet-another-react-lightbox/styles.css";
 import { Thumbnails } from "yet-another-react-lightbox/plugins";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 
+
 interface GalleryProps {
   images: string[],
   page: string
@@ -21,7 +22,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images, page }) => {
       <>
         <div className='images-container'>
           {images.map((image, index) => (
-            <img key={index} src={page === 'gallery' ? `http://localhost:4000/images/${image}` : `http://localhost:4000/images/${page}/${image}`} alt={`Pilt ${index}`} onClick={() => {setOpen(true); setIndex(index)}}/>
+            <img key={index} src={image} alt={`Pilt ${index}`} onClick={() => {setOpen(true); setIndex(index)}}/>
           ))}
         </div>
         <Lightbox
@@ -30,7 +31,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images, page }) => {
           index={index}
           close={() => setOpen(false)}
           slides={images.map((image) => ({
-            src: page === 'gallery' ? `http://localhost:4000/images/${image}` : `http://localhost:4000/images/${page}/${image}`,
+            src: image,
           }))}
         />
       </>

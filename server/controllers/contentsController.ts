@@ -27,7 +27,9 @@ const getAboutContent = async (req: Request, res: Response) => {
         const [rows, fields] = await pool.query('SELECT * FROM ABOUT_CONTENTS') as [AboutContent[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message:'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -40,7 +42,9 @@ const getAboutContent = async (req: Request, res: Response) => {
         res.status(200).json(data);
     } catch (error) {
         console.error("Error fetching about content: ", error);
-        res.status(500).send('Failed to fetch about content');
+        res.status(500).json({
+            message: 'Failed to fetch about content'
+        });
     }
 }
 
@@ -50,7 +54,9 @@ const getOneAboutContent = async (req: Request, res: Response) => {
         const [rows, fields] = await pool.query('SELECT * FROM ABOUT_CONTENTS WHERE ID = ?', [id]) as [AboutContent[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message:'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -63,7 +69,9 @@ const getOneAboutContent = async (req: Request, res: Response) => {
         res.status(200).json(data[0]);
     } catch (error) {
         console.error("Error fetching about content: ", error);
-        res.status(500).send('Failed to fetch about content');
+        res.status(500).json({
+            message: 'Failed to fetch about content'
+        });
     }
 }
 
@@ -82,7 +90,9 @@ const changeAboutContent = async (req: Request, res: Response) => {
         res.status(200).json(updatedData);
     } catch (err) {
         console.error("Failed to update about content: ", err);
-        res.status(400).send('Failed to update about content');
+        res.status(400).json({
+            message:'Failed to update about content'
+        });
     }
 }
 
@@ -91,7 +101,9 @@ const getContactContent = async (req: Request, res: Response) => {
         const [rows, fields] = await pool.query('SELECT * FROM CONTACT_CONTENTS') as [ContactContent[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -106,7 +118,9 @@ const getContactContent = async (req: Request, res: Response) => {
         res.status(200).json(data);
     } catch (error) {
         console.error("Error fetching contact content: ", error);
-        res.status(500).send('Failed to fetch contact content');
+        res.status(500).json({
+            message: 'Failed to fetch contact content'
+        });
     }
 }
 
@@ -116,7 +130,9 @@ const getOneContactContent = async (req: Request, res: Response) => {
         const [rows, fields] = await pool.query('SELECT * FROM CONTACT_CONTENTS WHERE ID = ?', [id]) as [ContactContent[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -131,7 +147,9 @@ const getOneContactContent = async (req: Request, res: Response) => {
         res.status(200).json(data[0]);
     } catch (error) {
         console.error("Error fetching contact content: ", error);
-        res.status(500).send('Failed to fetch contact content');
+        res.status(500).json({
+            message:'Failed to fetch contact content'
+        });
     }
 
 }
@@ -153,7 +171,9 @@ const changeContactContent = async (req: Request, res: Response) => {
         res.status(200).json(updatedData);
     } catch (err) {
         console.error("Failed to update contact content: ", err);
-        res.status(400).send('Failed to update contact content');
+        res.status(400).json({
+            message:'Failed to update contact content'
+        });
     }
 }
 
@@ -161,8 +181,10 @@ const getHousingOptionsContent = async (req: Request, res: Response) => {
     try {
         const [rows, fields] = await pool.query('SELECT * FROM HOUSING_OPTIONS') as [HousingOptionContent[], any];
 
-        if(!rows.length) {
-            return res.status(404).send('No content found');
+        if (!rows.length) {
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -176,7 +198,9 @@ const getHousingOptionsContent = async (req: Request, res: Response) => {
         res.status(200).json(data);
     } catch (error){
         console.error(`Error fetching housing options content: `, error);
-        res.status(500).send(`Failed to fetch housing options content`);
+        res.status(500).json({
+            message:`Failed to fetch housing options content`
+        });
     }
 }
 
@@ -186,7 +210,9 @@ const getHousingOptionContent = async (req: Request, res: Response) => {
         const [rows, fields] = await pool.query('SELECT * FROM HOUSING_OPTIONS WHERE ID = ?;', [id]) as [HousingOptionContent[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
 
         const data = rows.map(row => ({
@@ -200,7 +226,9 @@ const getHousingOptionContent = async (req: Request, res: Response) => {
         res.status(200).json(data[0]);
     } catch (error) {
         console.error(`Error fetching content: `, error);
-        res.status(500).send(`Failed to fetch content`);
+        res.status(500).json({
+            message:`Failed to fetch content`
+        });
     }
 }
 
@@ -220,7 +248,9 @@ const changeHousingOptionContent = async (req: Request, res: Response) => {
         res.status(200).json(updatedData);
     } catch (err) {
         console.error(`Failed to update ${page} content: `, err);
-        res.status(400).send(`Failed to update ${page} content`);
+        res.status(400).json({
+            message:`Failed to update ${page} content`
+        });
     }
 }
 

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ContactButton } from '../components/ContactButton'
+import { Button } from '../components/Button'
 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -17,11 +17,17 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 import { Gallery } from '../components/Gallery'
 
+interface Image {
+  id: number,
+  title: string,
+  url: string,
+}
+
 export const TentPage = () => {
 
   const [tentTitle, setTentTitle] = useState<string>("");
   const [tentContent, setTentContent] = useState<string>("");
-  const [tentImages, setTentImages] = useState<string[]>([])
+  const [tentImages, setTentImages] = useState<Image[]>([])
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/contents/housing/1')
@@ -62,11 +68,11 @@ export const TentPage = () => {
           <p>
             {tentContent}
           </p>
-          <ContactButton/>
+          <Button path="/kontakt" message="Võta ühendust!"/>
         </div>
         <div className='tent-image-container'>
           <div className='tent-image' onClick={() => setOpen(true)}>
-            <img src={`http://localhost:4000/images/tent/${tentImages[0]}`} width="300"/>
+            { tentImages[0] && <img src={tentImages[0].url} width="300"/> }
             <span className="image-arrow">
               <span className="material-symbols-outlined">
                 arrow_upward
@@ -82,7 +88,7 @@ export const TentPage = () => {
         close={() => setOpen(false)}
         slides={
           tentImages.map((image) => ({
-            src: `http://localhost:4000/images/tent/${image}`,
+            src: image.url,
           }))
         }
       />
@@ -95,7 +101,7 @@ export const TentPage = () => {
       animate='animate'
       exit='exit'
     >
-      <Gallery images={tentImages} page='tent'/>
+      <Gallery images={tentImages.map((image: Image) => image.url)} page='tent'/>
     </motion.div>
     </>
   )

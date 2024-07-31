@@ -28,6 +28,8 @@ export const App = () => {
             <Route path='/majutus' element={<HousingPage/>}/>
             <Route path='/majutus/telk' element={<TentPage/>}/>
             <Route path='/majutus/haarber' element={<MansionPage/>}/>
+            
+            <Route path='*' element={<NotFoundPage/>}/>
         </Routes>
     </AnimatePresence>
   )
