@@ -2,8 +2,8 @@ import React from 'react'
 import './HousingPage.css'
 import { useNavigate, Link, Outlet } from 'react-router-dom';
 
-import tentImage from '../assets/Telk.png'
-import mansionImage from '../assets/Uks.png'
+import tentImage from '../../public/assets/Telk.png'
+import mansionImage from '../../public/assets/Uks.png'
 
 import { motion } from 'framer-motion'
 import { pageTransitionToRight } from '../animations/pageTransitions'

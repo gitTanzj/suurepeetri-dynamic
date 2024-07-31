@@ -1,7 +1,7 @@
 import React from 'react'
 import './Logo.css'
 
-import logo from '../assets/suurepeetriLogo.svg'
+import logo from '../../public/assets/suurepeetriLogo.svg'
 
 import { Link } from 'react-router-dom'
 

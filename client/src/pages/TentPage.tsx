@@ -25,19 +25,21 @@ interface Image {
 
 export const TentPage = () => {
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [tentTitle, setTentTitle] = useState<string>("");
   const [tentContent, setTentContent] = useState<string>("");
   const [tentImages, setTentImages] = useState<Image[]>([])
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/contents/housing/1')
+    axios.get(`${API_URL}/api/contents/housing/1`)
       .then(res => {
         const contents = res.data
         setTentTitle(contents.title)
         setTentContent(contents.content)
       })
       .catch(err => console.log(err))
-    axios.get('http://localhost:4000/api/images/tent')
+    axios.get(`${API_URL}/api/images/tent`)
       .then(res => {
         setTentImages(res.data)
       })

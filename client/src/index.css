@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
 
 html{
-  background: #eee url('./assets/background/backgroundImage1.png');
+  background: #eee url('../public/assets/background/backgroundImage1.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

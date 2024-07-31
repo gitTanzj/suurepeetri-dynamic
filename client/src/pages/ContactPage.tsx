@@ -22,13 +22,15 @@ interface Image {
 
 export const ContactPage = () => {
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     const [contactTitle, setContactTitle] = useState<string>("");
     const [contactContent, setContactContent] = useState<ContactContent>({});
 
     const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/contents/contact')
+    axios.get(`${API_URL}/api/contents/contact`)
     .then(res => {
         const contents = res.data[0]
         setContactTitle(contents.title)
@@ -39,7 +41,7 @@ export const ContactPage = () => {
         })
     })
     .catch(err => console.log(err))
-    axios.get('http://localhost:4000/api/images/contact')
+    axios.get(`${API_URL}/api/images/contact`)
       .then(res => {
           setImages(res.data)
       })

@@ -17,10 +17,12 @@ interface Image {
 
 export const GalleryPage = () => {
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [images, setImages] = useState<Image[]>([])
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/images/gallery')
+    axios.get(`${API_URL}/api/images/gallery`)
       .then(res => {
         setImages(res.data)
       })

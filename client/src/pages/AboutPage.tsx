@@ -15,20 +15,22 @@ interface Image {
 
 export const AboutPage = () => {
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     const [aboutTitle, setAboutTitle] = useState<string>("");
     const [aboutContent, setAboutContent] = useState<string>("");
 
     const [images, setImages] = useState<Image[]>([])
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/contents/about')
+        axios.get(`${API_URL}/api/contents/about`)
             .then(res => {
                 const contents = res.data[0]
                 setAboutTitle(contents.title)
                 setAboutContent(contents.content)
             })
             .catch(err => console.log(err));
-        axios.get('http://localhost:4000/api/images/about')
+        axios.get(`${API_URL}/api/images/about`)
             .then(res => {
                 setImages(res.data)
             })

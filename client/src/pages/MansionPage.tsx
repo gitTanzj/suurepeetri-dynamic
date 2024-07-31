@@ -21,19 +21,21 @@ interface Image {
 
 export const MansionPage = () => {
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [mansionTitle, setMansionTitle] = useState<string>("");
   const [mansionContent, setMansionContent] = useState<string>("");
   const [mansionImages, setMansionImages] = useState<Image[]>([])
 
   useEffect(() => {
-      axios.get('http://localhost:4000/api/contents/housing/2')
+      axios.get(`${API_URL}/api/contents/housing/2`)
         .then(res => {
           const contents = res.data
           setMansionTitle(contents.title)
           setMansionContent(contents.content)
         })
         .catch(err => console.log(err))
-      axios.get('http://localhost:4000/api/images/mansion')
+      axios.get(`${API_URL}/api/images/mansion`)
         .then(res => {
           setMansionImages(res.data)
         })

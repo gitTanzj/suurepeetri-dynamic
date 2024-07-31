@@ -4,10 +4,11 @@ interface LoginProps {
     password: string;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const authProvider = {
     login: async ({ username, password }: LoginProps) => {
-        const request = new Request('http://localhost:4000/api/admin/login', {
+        const request = new Request(`${apiUrl}/admin/login`, {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
