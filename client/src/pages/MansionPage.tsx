@@ -10,7 +10,7 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 import { useNavigate } from 'react-router-dom'
 
-import { ContactButton } from '../components/ContactButton'
+import { Button } from '../components/Button'
 import { Gallery } from '../components/Gallery'
 
 interface Image {
@@ -64,7 +64,7 @@ export const MansionPage = () => {
             <p>
                 {mansionContent}
             </p>
-            <ContactButton/>
+            <Button path="/kontakt" message="Võta ühendust!"/>
           </div>
           <div className='tent-image-container'>
             <div className='tent-image' onClick={() => setOpen(true)}>

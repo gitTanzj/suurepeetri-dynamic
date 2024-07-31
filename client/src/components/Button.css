@@ -1,4 +1,4 @@
-.contact-button{
+.button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,25 +9,25 @@
     border-radius: 5px;
     transition: 0.2s
 }
-.contact-button:hover{
+.button:hover{
     cursor: pointer;
     transform: translateY(-3px);
     box-shadow: 0px 4px rgba(0,0,0,1);
 }
-.contact-button:hover > .contact-button-content span{
+.button:hover > .button-content span{
     opacity: 1;
 }
-.contact-button:active{
+.button:active{
     transform: translateY(-1px);
     box-shadow: 0px 1px rgba(0,0,0,1);
 
 }
-.contact-button-content{
+.button-content{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.contact-button-content span{
+.button-content span{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,6 +35,6 @@
     opacity: 0;
     transition: 0.2s;
 }
-.contact-button-content h3{
+.button-content h3{
     margin: 0;
 }

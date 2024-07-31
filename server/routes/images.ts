@@ -21,7 +21,6 @@ import {
     getContactImages,
     
     postImage,
-    modifyImage,
     deleteImage
 } from '../controllers/imagesController';
 
@@ -38,7 +37,6 @@ router.get('/gallery', getGalleryImages);
 router.get('/contact', getContactImages);
 
 router.post('/:page', authenticateToken, upload.single('image'), postImage);
-router.put('/:page', authenticateToken, upload.single('image'), modifyImage);
 router.delete('/:page/:id', authenticateToken, deleteImage);
 
 

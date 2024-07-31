@@ -20,7 +20,9 @@ const getImageById = async (req: Request, res: Response) => {
         ) as [Image[], any];
 
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
         const data = rows.map(row => ({
             id: row.ID,
@@ -31,7 +33,9 @@ const getImageById = async (req: Request, res: Response) => {
         res.status(200).json(data);
     } catch(err) {
         console.error("Error fetching image: ", err);
-        res.status(500).send('Failed to fetch image');
+        res.status(500).json({
+            message: 'Failed to fetch image'
+        });
      }
 }
 
@@ -41,7 +45,9 @@ const getImagesByTag = async (req: Request, res: Response, tag: string) => {
             'SELECT IMAGES.ID, IMAGES.TITLE, IMAGES.URL FROM IMAGES INNER JOIN IMAGES_TAGS ON IMAGES.ID = IMAGES_TAGS.IMAGE_ID INNER JOIN TAGS ON TAGS.TAG = IMAGES_TAGS.TAG WHERE TAGS.TAG = ?', [tag]
         ) as [Image[], any];
         if (!rows.length) {
-            return res.status(404).send('No content found');
+            return res.status(404).json({
+                message: 'No content found'
+            });
         }
         const data = rows.map(row => ({
             id: row.ID,
@@ -53,7 +59,9 @@ const getImagesByTag = async (req: Request, res: Response, tag: string) => {
         res.status(200).json(data);
      } catch(err) {
         console.error(`Error fetching images by tag: ${tag}}: `, err);
-        res.status(500).send(`Failed to fetch images by tag: ${tag}`);
+        res.status(500).json({
+            message: `Failed to fetch images by tag: ${tag}`
+        });
      }
 }
 
@@ -82,24 +90,36 @@ const postImage = async (req: Request, res: Response) => {
     const { title } = req.body;
     const tag = req.params.page.toUpperCase();
     if (!file) {
-        return res.status(400).send('No file uploaded');
+        return res.status(400).json({
+            message: 'No file uploaded'
+        });
     }
-    if (!title) {
-        return res.status(400).send('No title provided');
+    if (title.length === 0) {
+        return res.status(400).json({
+            message: 'No title provided'
+        });
     }
     try{
         const [images] = await pool.query('SELECT * FROM IMAGES WHERE URL = ?', [`http://localhost:4000/images/${file.originalname}`]) as [Image[], any];
+        const id = images[0].ID;
         if (images.length > 0) {
             const [images_tags] = await pool.query('SELECT * FROM IMAGES_TAGS WHERE IMAGE_ID = ? AND TAG = ?', [images[0].ID, tag]) as [{IMAGE_ID:number, TAG:string}[], any];
             if(images_tags.length > 0){
-                res.status(409).send('Image already exists');
+                res.status(409).json({
+                    message: 'Image with provided title and/or tag already exists'
+                });
             } else {
                 try {
-                    await pool.query('INSERT INTO IMAGES_TAGS (IMAGE_ID, TAG) VALUES (?, ?)', [images[0].ID, tag]);
-                    res.status(201).send('File uploaded successfully');
+                    await pool.query('INSERT INTO IMAGES_TAGS (IMAGE_ID, TAG) VALUES (?, ?)', [id, tag]);
+                    res.status(201).json({
+                        message: 'File uploaded successfully',
+                        id: id
+                    });
                 } catch(err) {
                     console.error("Error uploading image: ", err);
-                    res.status(500).send('Failed to upload image');
+                    res.status(500).json({
+                        message: 'Failed to upload image'
+                    });
                 }
             }
         } else {
@@ -108,34 +128,24 @@ const postImage = async (req: Request, res: Response) => {
                     const imageId = countRows[0].count + 1;
                     await pool.query('INSERT INTO IMAGES (ID, TITLE, URL) VALUES (?, ?, ?)', [imageId, title, `http://localhost:4000/images/${file.originalname}`]);
                     await pool.query('INSERT INTO IMAGES_TAGS (IMAGE_ID, TAG) VALUES (?, ?)', [imageId, tag]);
-                    res.status(201).send('File uploaded successfully');
+                    res.status(201).json({
+                        message: 'File uploaded successfully',
+                        id: images[0].ID
+                    });
                 } catch(err) {
                     console.error("Error uploading image: ", err);
-                    res.status(500).send('Failed to upload image');
+                    res.status(500).json({
+                        message: 'Failed to upload image'
+                    });
                 }
         }
     } catch(err){
         console.error("Error checking image: ", err);
-        res.status(500).send('Failed to check image');
+        res.status(500).json({
+            message:'Failed to check image'
+        });
     }
     
-}
-
-
-const modifyImage = async (req: Request, res: Response) => {
-    const file = req.file;
-    const { title, tags } = req.body;
-    if (!file) {
-        return res.status(400).send('No file uploaded');
-    }
-    if (!title) {
-        return res.status(400).send('No title provided');
-    }
-    if (!tags) {
-        return res.status(400).send('No tags provided');
-    }
-    console.log('File: ', file);
-    res.status(201).send('File uploaded successfully');
 }
 
 
@@ -143,17 +153,22 @@ const modifyImage = async (req: Request, res: Response) => {
 const deleteImage = async (req: Request, res: Response) => {
     const id = req.params.id;
     const tag = req.params.page.toUpperCase();
-    console.log(id, tag);
     if (!id) {
-        return res.status(400).send('No id provided');
+        return res.status(400).json({
+            message:'No id provided'
+        });
     }
     if (!tag) {
-        return res.status(400).send('No tag provided');
+        return res.status(400).json({
+            message:'No tag provided'
+        });
     }
     try {
         const [delResult] = await pool.query('DELETE FROM IMAGES_TAGS WHERE IMAGE_ID = ? AND TAG = ?', [id, tag]) as [any, any];
         if (delResult.affectedRows === 0) {
-            return res.status(404).send('No intermediary entry with provided id and tag found');
+            return res.status(404).json({
+                message: 'No intermediary entry with provided id and tag found'
+            });
         } else {
             const [rows, fields] = await pool.query('SELECT * FROM IMAGES_TAGS WHERE IMAGE_ID = ?', [id]) as [any[], any];
             if(rows.length === 0){
@@ -161,19 +176,27 @@ const deleteImage = async (req: Request, res: Response) => {
                 const imageURL = imageURLs[0].URL;
                 const [delResult] = await pool.query('DELETE FROM IMAGES WHERE ID = ?', [id]) as [any, any];
                 if (delResult.affectedRows === 0) {
-                    return res.status(404).send('No image with provided id found');
+                    return res.status(404).json({
+                        message: 'No image with provided id found'
+                    });
                 } else {
                     fs.unlink(`./images/${imageURL.split('/').pop()}`)
                     .then((result) => {
-                        res.status(200).send('Image (including file) deleted successfully');
+                        res.status(200).json({
+                            message: 'No image with provided id found'
+                        });
                     })
                     .catch((err) => {
                         console.error("Error deleting image: ", err);
-                        res.status(500).send('Failed to delete image');
+                        res.status(500).json({
+                            message:'Failed to delete image'
+                        });
                     });
                 }
             } else {
-                res.status(200).send('Image deleted successfully');
+                res.status(200).json({
+                    message:'Image deleted successfully'
+                });
             }   
         }
     } catch(err) {
@@ -191,6 +214,5 @@ export {
     getContactImages,
 
     postImage,
-    modifyImage,
     deleteImage
  }
