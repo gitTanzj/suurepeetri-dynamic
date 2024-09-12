@@ -1,10 +1,18 @@
-import { describe, it, expect, test, afterEach } from '@jest/globals';
-import axios from 'axios';
-import pool from './utils/db';
+import { 
+    describe,
+    expect,
+    test,
+    afterEach,
+    beforeAll,
+    afterAll
+} from '@jest/globals';
+import request from 'supertest';
+
+import app from './index.ts';
 
 describe('Test admin registration', () => {
     afterEach(() => {
-        pool.query('DELETE FROM USERS WHERE username = ?', ['testUser'])
+        // pool.query('DELETE FROM USERS WHERE username = ?', ['testUser'])
     })
     test('Admin registration works', () => {
         const creds = {
@@ -12,7 +20,7 @@ describe('Test admin registration', () => {
             password: 'testUserPassword'
         }
 
-        axios.post('http://localhost:4000/api/admin/register', creds)
+        request(app).post('/api/admin/register').send(creds)
         .then(res => {
             expect(res.status).toBe(201)
         })
