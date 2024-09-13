@@ -53,7 +53,7 @@ const adminLogin = async (req: Request, res: Response) => {
 
         if (user && await bcrypt.compare(password, user.password)) {
             const token = jwt.sign({ id: user.id }, process.env.JWS_SECRET || '', { expiresIn: '1h' });
-            res.json({ token });
+            res.status(200).json({ token });
         } else {
             res.status(401).json({
                 message:'Invalid credentials'

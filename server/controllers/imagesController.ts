@@ -101,8 +101,8 @@ const postImage = async (req: Request, res: Response) => {
     }
     try{
         const [images] = await pool.query('SELECT * FROM IMAGES WHERE URL = ?', [`http://localhost:4000/images/${file.originalname}`]) as [Image[], any];
-        const id = images[0].ID;
         if (images.length > 0) {
+            const id = images[0].ID;
             const [images_tags] = await pool.query('SELECT * FROM IMAGES_TAGS WHERE IMAGE_ID = ? AND TAG = ?', [images[0].ID, tag]) as [{IMAGE_ID:number, TAG:string}[], any];
             if(images_tags.length > 0){
                 res.status(409).json({
@@ -130,7 +130,7 @@ const postImage = async (req: Request, res: Response) => {
                     await pool.query('INSERT INTO IMAGES_TAGS (IMAGE_ID, TAG) VALUES (?, ?)', [imageId, tag]);
                     res.status(201).json({
                         message: 'File uploaded successfully',
-                        id: images[0].ID
+                        id: imageId
                     });
                 } catch(err) {
                     console.error("Error uploading image: ", err);
@@ -183,7 +183,7 @@ const deleteImage = async (req: Request, res: Response) => {
                     fs.unlink(`./images/${imageURL.split('/').pop()}`)
                     .then((result) => {
                         res.status(200).json({
-                            message: 'No image with provided id found'
+                            message: 'Image deleted successfully'
                         });
                     })
                     .catch((err) => {

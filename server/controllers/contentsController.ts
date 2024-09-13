@@ -87,7 +87,7 @@ const changeAboutContent = async (req: Request, res: Response) => {
             content: content
         };
 
-        res.status(200).json(updatedData);
+        res.status(201).json(updatedData);
     } catch (err) {
         console.error("Failed to update about content: ", err);
         res.status(400).json({
@@ -168,7 +168,7 @@ const changeContactContent = async (req: Request, res: Response) => {
             address: address
         };
 
-        res.status(200).json(updatedData);
+        res.status(201).json(updatedData);
     } catch (err) {
         console.error("Failed to update contact content: ", err);
         res.status(400).json({
@@ -245,7 +245,7 @@ const changeHousingOptionContent = async (req: Request, res: Response) => {
             page: page
         };
 
-        res.status(200).json(updatedData);
+        res.status(201).json(updatedData);
     } catch (err) {
         console.error(`Failed to update ${page} content: `, err);
         res.status(400).json({

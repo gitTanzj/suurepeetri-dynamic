@@ -4,5 +4,8 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest",{}],
   },
-  allowImportingTsExtensions: true,
+  globals: {
+    "JWS_TOKEN": "",
+    "test_image_id": 3
+  }
 };
